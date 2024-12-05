@@ -36,6 +36,11 @@ def format_titles(titles):
   formatted_titles = '  * ' + '  * '.join(new_lines)
   return formatted_titles
 
+def person_description(name, planet, titles):
+  description = f'{name} is from the planet {planet}. They appear in the following films:\n{titles}'
+  return description
+
+
 
 
 
@@ -45,8 +50,10 @@ if __name__ == '__main__':
   character = search()
   name = parse_name(character)
   planet= parse_planet(character)
-  films = parse_films(character)
+  film_list = parse_films(character)
+  titles = format_titles(film_list)
+  description = person_description(name, planet, titles)
 
-  pprint.pprint(films)
+  print(description)
 
 
