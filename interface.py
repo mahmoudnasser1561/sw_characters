@@ -10,6 +10,12 @@ def search(search_term='luke'):
   else:
     return None
 
+def parse_name(person):
+  name = person.get('name')
+  return name
+
+
+
 if __name__ == '__main__':
   import pprint
 
