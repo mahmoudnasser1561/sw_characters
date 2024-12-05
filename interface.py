@@ -1,59 +1,15 @@
-import requests
+import fire
+import search_api
 
-def search(search_term='luke'):
-  base_url = 'https://swapi.dev/api/people/?search='
-  search_url = f'{base_url}{search_term}'
-  resp = requests.get(search_url)
-  resp_json = resp.json()
-  if resp_json.get('results'):
-    return resp.json()['results'][0]
+def search(name='luke'):
+  characters = search_api.search(name)
+  if characters is not None:
+    print(parse_char(characters))
   else:
-    return None
+    print(f'Cannot find the character "{name}"')
 
-def parse_name(person):
-  name = person.get('name')
-  return name
-
-def parse_planet(person):
-  planet_url = person.get('homeworld')
-  resp = requests.get(planet_url)
-  planet = resp.json().get('name')
-  return planet
-
-def parse_films(person):
-  film_urls = person.get('films')
-  films =[fetch_title(film_url) for film_url in film_urls]
-  return films
-
-def fetch_title(url):
-  film_json = requests.get(url).json()
-  film_title = film_json.get('title')
-  return film_title
-
-
-def format_titles(titles):
-  new_lines = [title + '\n' for title in titles]
-  formatted_titles = '  * ' + '  * '.join(new_lines)
-  return formatted_titles
-
-def person_description(name, planet, titles):
-  description = f'{name} is from the planet {planet}. They appear in the following films:\n{titles}'
-  return description
-
-
-
-
+def parse_char(char):
+  pass
 
 if __name__ == '__main__':
-  import pprint
-
-  character = search()
-  name = parse_name(character)
-  planet= parse_planet(character)
-  film_list = parse_films(character)
-  titles = format_titles(film_list)
-  description = person_description(name, planet, titles)
-
-  print(description)
-
-
+  fire.Fire(search)
