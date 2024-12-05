@@ -14,6 +14,11 @@ def parse_name(person):
   name = person.get('name')
   return name
 
+def parse_planet(person):
+  planet_url = person.get('homeworld')
+  resp = requests.get(planet_url)
+  planet = resp.json().get('name')
+  return planet
 
 
 if __name__ == '__main__':
